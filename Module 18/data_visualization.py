@@ -44,11 +44,14 @@ with col2:
 
 # Genre Distribution Pie Chart
 st.subheader("Genre Distribution")
-fig = px.pie(
-    books_df,
-    names='Genre',
-    title='Most Liked Genre (2009-2022)',
-    color='Genre',
-    color_discrete_sequence=px.colors.sequential.Plasma
-)
+fig = px.pie(books_df, names='Genre', title='Most Liked Genre (2009-2022)', color='Genre',
+             color_discrete_sequence=px.colors.sequential.Plasma)
+st.plotly_chart(fig)
+
+
+# Number of Fiction vs Non-Fiction Books Over the Years
+st.subheader("Number of Fiction vs Non-Fiction Books Over the Years")
+size = books_df.groupby(['Year', 'Genre']).size().reset_index(name='Counts')
+fig = px.bar(size, x='Year', y='Counts', color='Genre', title="Number of Fiction vs Non-Fiction Books from 2009-2022",
+             color_discrete_sequence=px.colors.sequential.Plasma, barmode='group')
 st.plotly_chart(fig)
