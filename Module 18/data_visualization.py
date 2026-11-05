@@ -48,10 +48,19 @@ fig = px.pie(books_df, names='Genre', title='Most Liked Genre (2009-2022)', colo
              color_discrete_sequence=px.colors.sequential.Plasma)
 st.plotly_chart(fig)
 
-
 # Number of Fiction vs Non-Fiction Books Over the Years
 st.subheader("Number of Fiction vs Non-Fiction Books Over the Years")
 size = books_df.groupby(['Year', 'Genre']).size().reset_index(name='Counts')
 fig = px.bar(size, x='Year', y='Counts', color='Genre', title="Number of Fiction vs Non-Fiction Books from 2009-2022",
              color_discrete_sequence=px.colors.sequential.Plasma, barmode='group')
+st.plotly_chart(fig)
+
+# Top 15 Authors by Counts of Books Published
+st.subheader("Top 15 Authors by Counts of Books Published (2009-2022)")
+top_authors = books_df['Author'].value_counts().head(15).reset_index()
+top_authors.columns = ['Author', 'Count']
+fig = px.bar(top_authors, x='Count', y='Author', orientation='h',
+             title='Top 15 Authors by Counts of Books Published',
+             labels={'Count': 'Counts of Books Published', 'Author': 'Author'},
+             color='Count', color_continuous_scale=px.colors.sequential.Plasma)
 st.plotly_chart(fig)
